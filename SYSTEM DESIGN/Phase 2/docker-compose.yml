@@ -1,0 +1,33 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8100:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - gateway
+
+  gateway:
+    build: ./backend/gateway
+    env_file:
+      - ./backend/gateway/.env
+    depends_on:
+      - auth
+      - orders
+      - payment
+
+  auth:
+    build: ./backend/services/auth
+    env_file:
+      - ./backend/services/auth/.env
+
+  orders:
+    build: ./backend/services/orders
+    env_file:
+      - ./backend/services/orders/.env
+
+  payment:
+    build: ./backend/services/payment
+    env_file:
+      - ./backend/services/payment/.env

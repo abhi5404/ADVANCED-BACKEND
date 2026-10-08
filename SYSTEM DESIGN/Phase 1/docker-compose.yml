@@ -1,0 +1,29 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+   
+
+  server1:
+    build: ./server
+    env_file:
+      - ./server/.env
+    environment:
+      SERVER_NAME: server1
+
+  server2:
+    build: ./server
+    env_file:
+      - ./server/.env
+    environment:
+      SERVER_NAME: server2
+
+  server3:
+    build: ./server
+    env_file:
+      - ./server/.env
+    environment:
+      SERVER_NAME: server3
